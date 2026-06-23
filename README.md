@@ -15,6 +15,7 @@ Reusable Claude Code command files for career research, engineering workflows, a
 |-------|-------------|
 | [research-company](career/research-company.md) | Full due-diligence report on a company: financials, culture, tech stack, market position, alumni sentiment, trajectory outlook. Parallel 8-agent sweep with file output. |
 | [resume-review](career/resume-review.md) | Score and critique a resume against Google XYZ format, verb diversity, ATS readiness, recruiter-scan optimization, and defensibility. Quick mode (scorecard) or deep mode (full before/after rewrites). Parallel 6-7 agent analysis with file output. |
+| [linkedin-optimize](career/linkedin-optimize.md) | Generate an optimized LinkedIn profile (About, headline, narrative experience blurbs) from a resume. Transforms bullets into story-driven content for recruiters and hiring managers. Parallel 4-agent generation with file output. |
 
 ## Structure
 
@@ -36,6 +37,7 @@ Approximate token usage per run. Actual cost varies by data availability (well-k
 | research-company (no role) | 6 Sonnet + Opus synthesis | ~130K-190K | ~10K-12K | ~150-200K | Skips Engineering and Onboarding agents |
 | resume-review (quick) | 6-7 Sonnet + Opus synthesis | ~80K-120K | ~10K-12K | ~100-150K | Scorecard + critique only |
 | resume-review (deep) | 6-7 Sonnet + Opus synthesis | ~140K-200K | ~15K-20K | ~180-250K | Full rewrites for weak bullets |
+| linkedin-optimize | 4 Sonnet + Opus assembly | ~60K-90K | ~8K-12K | ~80-120K | About + headline + experience blurbs |
 
 For context: one run is roughly equivalent to 15-20 minutes of active Claude Code usage.
 
