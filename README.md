@@ -25,6 +25,17 @@ claude-code-toolkit/
   research/         # (future) Deep-dive investigation patterns
 ```
 
+## Cost Estimates
+
+Approximate token usage per run. Actual cost varies by data availability (well-known companies produce more web results).
+
+| Skill | Agents | Input Tokens | Output Tokens | Total | Notes |
+|-------|--------|--------------|---------------|-------|-------|
+| research-company (with role) | 8 Sonnet + Opus synthesis | ~175K-255K | ~13K-15K | ~200-270K | Full 8-agent sweep |
+| research-company (no role) | 6 Sonnet + Opus synthesis | ~130K-190K | ~10K-12K | ~150-200K | Skips Engineering and Onboarding agents |
+
+For context: one run is roughly equivalent to 15-20 minutes of active Claude Code usage.
+
 ## Requirements
 
 - Claude Code CLI or IDE extension
