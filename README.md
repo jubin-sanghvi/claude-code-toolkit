@@ -19,11 +19,18 @@ Reusable Claude Code command files for career research, engineering workflows, a
 | [interview-screen-prep](career/interview-screen-prep.md) | Prepare for recruiter and hiring manager screens. Extracts a reusable story bank, generates resume walkthrough scripts, red flag analysis with reframes, and full Q&A sets in PAR format. Rates answer strength and identifies prep gaps. Parallel 5-6 agent analysis with file output. |
 | [interview-behavioral-prep](career/interview-behavioral-prep.md) | Deep behavioral/leadership round preparation. Maps stories against Amazon LPs, Google, Meta, or generic frameworks. Generates both PAR outlines and full 2-minute rehearsal scripts. Includes failure/growth story prep and a prioritized practice plan. Parallel 6-7 agent analysis with file output. |
 
+### Optimization
+
+| Skill | Description |
+|-------|-------------|
+| [CLAUDE-token-optimization](optimization/CLAUDE-token-optimization.md) | Global CLAUDE.md template for token optimization. Subagent delegation rules, tiered model routing (Haiku/Sonnet/Opus), memory strategy, and token-saving rules. Drop into `~/.claude/CLAUDE.md` and customize. Works with [RTK](https://github.com/rtk-ai/rtk), [Caveman](https://github.com/JuliusBrussee/caveman), [Ponytail](https://github.com/DietrichGebert/ponytail), [CodeGraph](https://github.com/colbymchenry/codegraph), and [Headroom](https://github.com/headroomlabs-ai/headroom). |
+
 ## Structure
 
 ```
 claude-code-toolkit/
   career/           # Job search, interview prep, company research
+  optimization/     # Token optimization, CLAUDE.md templates
   engineering/      # (future) Code review, architecture, debugging workflows
   productivity/     # (future) Scheduling, reporting, automation
   research/         # (future) Deep-dive investigation patterns
