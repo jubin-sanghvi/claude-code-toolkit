@@ -23,14 +23,42 @@ For maximum savings, install these tools first:
 - **Dependency updates**: Haiku subagent.
 - **Test execution**: Background bash (not subagent, cheaper).
 
-### Keep in main context:
+### Keep in main context (ONLY these):
 - User conversation and decisions
-- Architecture/design discussions
-- Complex multi-file refactors needing coordination
-- Anything requiring user approval
+- Multi-file refactors where files have circular dependencies
+- Architecture pivots requiring user approval mid-stream
+- Everything else: delegate. When in doubt, delegate.
 
 ### Parallel execution:
 When 2+ tasks are independent, ALWAYS launch parallel subagents in a single message. Never sequential when parallel is possible.
+
+## Plan Orchestration (REQUIRED in every plan)
+
+Every plan MUST end with an **Orchestration Strategy** section containing:
+
+### 1. Execution batches
+Group tasks into parallel batches. Independent tasks in same batch run as parallel subagents in single message. Format:
+
+| Batch | Agent Type | Model | Task | Files |
+|-------|-----------|-------|------|-------|
+| 1 | Explore (x2) | haiku | Research types + existing patterns | src/types.ts, src/utils/ |
+| 1 | Explore | haiku | Find test patterns | tests/ |
+| 2 | Subagent | haiku | Add new types | src/types.ts |
+| 2 | Subagent | haiku | Add API route | src/routes.ts |
+| 3 | Main thread | sonnet | Core logic (multi-file coordination) | src/service.ts, src/handler.ts |
+| 4 | Subagent | haiku | Review all changes | diff |
+
+### 2. Main context budget
+List ONLY what stays in main context (coordination, user decisions, complex multi-file work). Everything else goes to subagents.
+
+### Rules
+- Default haiku for all mechanical/bounded work
+- Sonnet only for multi-file coordination or architecture decisions
+- Never run sequentially what can run in parallel
+- Each batch completes before next starts
+- Exploration always batch 1 (haiku Explore agents)
+- Review/verification always last batch (haiku)
+- Git operations always delegated (haiku subagent)
 
 ## Tiered Model Routing
 
@@ -75,6 +103,7 @@ Before starting project work, check its memory/ directory. Update or remove stal
 7. Use /clear between unrelated tasks or project switches
 8. Use "ultrathink" in prompt for deep architecture reasoning
 9. Use /rewind (Esc+Esc) after 2+ failed corrections instead of continuing with polluted context
+10. Prefer subagent over inline work: if a task can be described in a prompt, ship it to a subagent instead of doing it in main context
 
 ## One-Shot Pattern
 
