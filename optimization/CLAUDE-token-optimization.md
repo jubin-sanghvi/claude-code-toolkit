@@ -14,7 +14,7 @@ For maximum savings, install these tools first:
 ## Subagent Delegation Rules (ALWAYS FOLLOW)
 
 ### Always delegate to subagent:
-- **Planning/exploration**: Explore agents (model: haiku) for codebase research. 1-3 parallel based on scope.
+- **Planning/exploration**: Explore agents (model: haiku) for codebase research. 1-5 parallel based on scope.
 - **Git commit + push**: Haiku subagent. Compose message, stage, commit, push.
 - **Code review**: Haiku subagent (or cavecrew-reviewer if Caveman plugin installed for compressed output).
 - **File location** ("where is X", "what calls Y"): Haiku subagent (or cavecrew-investigator with Caveman).
@@ -28,6 +28,9 @@ For maximum savings, install these tools first:
 - Multi-file refactors where files have circular dependencies
 - Architecture pivots requiring user approval mid-stream
 - Everything else: delegate. When in doubt, delegate.
+
+### Default: always delegate
+Every task goes to a subagent, even single tasks. Only exception: work requiring user interaction mid-stream (questions, approvals, architecture pivots). If unsure whether to delegate, delegate.
 
 ### Parallel execution:
 When 2+ tasks are independent, ALWAYS launch parallel subagents in a single message. Never sequential when parallel is possible.
