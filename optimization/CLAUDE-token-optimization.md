@@ -32,8 +32,29 @@ For maximum savings, install these tools first:
 ### Default: always delegate
 Every task goes to a subagent, even single tasks. Only exception: work requiring user interaction mid-stream (questions, approvals, architecture pivots). If unsure whether to delegate, delegate.
 
+### Main thread protocol
+Main thread does ONLY:
+- Receive user messages and respond with summaries
+- Spawn and coordinate subagents
+- Ask user questions when blocked
+- Report completion with what changed
+
+Main thread NEVER:
+- Reads files (delegate to Explore agent)
+- Edits files (delegate to implementation agent)
+- Runs bash commands except: git status (pre-commit check), launching background tasks
+- Writes new files (delegate to builder agent)
+- Runs grep/find (delegate to Explore agent)
+
+If you catch yourself about to call Read, Edit, Write, Grep, or Bash for anything other than agent coordination, STOP. Describe the task in a prompt and ship it to a subagent.
+
 ### Parallel execution:
 When 2+ tasks are independent, ALWAYS launch parallel subagents in a single message. Never sequential when parallel is possible.
+- Writing 3 components? 3 parallel agents.
+- Building backend + frontend? Parallel agents.
+- 4 articles/pages? 4 parallel agents.
+- Exploring 3 directories? 3 Explore agents.
+- Count of parallel agents limited only by task independence, not by caution.
 
 ## Plan Orchestration (REQUIRED in every plan)
 
@@ -62,6 +83,14 @@ List ONLY what stays in main context (coordination, user decisions, complex mult
 - Exploration always batch 1 (haiku Explore agents)
 - Review/verification always last batch (haiku)
 - Git operations always delegated (haiku subagent)
+
+### 3. Execution enforcement
+When executing a plan with an orchestration table:
+- Launch ALL agents in a batch as parallel Agent calls in a SINGLE message
+- Do NOT fall back to inline work if an agent could do it
+- Do NOT launch batch agents sequentially, even if "it's just one quick thing"
+- After each batch completes, summarize results in 1-2 sentences, then launch next batch
+- Main thread between batches: ONLY coordination text + next batch spawn
 
 ## Tiered Model Routing
 
@@ -107,6 +136,14 @@ Before starting project work, check its memory/ directory. Update or remove stal
 8. Use "ultrathink" in prompt for deep architecture reasoning
 9. Use /rewind (Esc+Esc) after 2+ failed corrections instead of continuing with polluted context
 10. Prefer subagent over inline work: if a task can be described in a prompt, ship it to a subagent instead of doing it in main context
+11. Main thread token budget: aim for <5% of session tokens in main thread. If main thread is doing mechanical work, you are doing it wrong.
+
+## Agent Permissions & Autonomy
+
+- Grant agents full read/write/execute access within your home directory
+- Agents should NOT ask for permission to edit files, create directories, run builds, install deps
+- Agents handle errors autonomously: retry, fix, or report failure in summary
+- Only escalate to user for: architecture decisions, ambiguous requirements, destructive operations outside home directory
 
 ## One-Shot Pattern
 
